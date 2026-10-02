@@ -468,7 +468,13 @@ def render_response_panel(
 
     # 1. Fetch IP Threat Intelligence & Geolocation Metadata
     intel = None
-    api_base = os.getenv("BACKEND_URL", "http://localhost:8000").rstrip("/")
+    api_base = os.getenv("BACKEND_URL")
+    if not api_base:
+        try:
+            api_base = st.secrets.get("BACKEND_URL")
+        except Exception:
+            pass
+    api_base = (api_base or "http://localhost:8000").rstrip("/")
     if attacker_ip != "None":
         try:
             r = requests.get(f"{api_base}/enrich_ip/{attacker_ip}", timeout=3)
