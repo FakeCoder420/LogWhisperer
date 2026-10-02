@@ -468,9 +468,10 @@ def render_response_panel(
 
     # 1. Fetch IP Threat Intelligence & Geolocation Metadata
     intel = None
+    api_base = os.getenv("BACKEND_URL", "http://localhost:8000").rstrip("/")
     if attacker_ip != "None":
         try:
-            r = requests.get(f"http://localhost:8000/enrich_ip/{attacker_ip}", timeout=2)
+            r = requests.get(f"{api_base}/enrich_ip/{attacker_ip}", timeout=3)
             if r.ok:
                 intel = r.json()
         except Exception:
@@ -536,7 +537,7 @@ def render_response_panel(
         unsafe_allow_html=True,
     )
 
-    BACKEND_URL = "http://localhost:8000/analyze_threat"
+    BACKEND_URL = f"{api_base}/analyze_threat"
 
     suspicious_log_entries = [
         f"{row.timestamp} | {row.ip_address} {row.method} {row.endpoint} HTTP {row.status_code} [{row.user_agent}]"
@@ -592,7 +593,7 @@ def render_response_panel(
                     st.rerun()
 
                 except requests.exceptions.ConnectionError:
-                    st.error("Cannot connect to LogWhisperer API at http://localhost:8000. Ensure FastAPI backend is running.", icon="🔌")
+                    st.error(f"Cannot connect to LogWhisperer API at {api_base}. Ensure FastAPI backend is running.", icon="🔌")
                 except requests.exceptions.HTTPError as exc:
                     detail = ""
                     try:
