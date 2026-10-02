@@ -6,6 +6,7 @@ Refactored UI/UX architecture using design tokens, modular render functions,
 and clean visual hierarchy.
 """
 
+import os
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
