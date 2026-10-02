@@ -357,14 +357,13 @@ def render_chart(df: pd.DataFrame, attacker_ip: str) -> None:
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(family="Inter, sans-serif", color="#8B98B0"),
         height=320,
-        margin=dict(l=35, r=20, t=40, b=45),
+        margin=dict(l=45, r=20, t=45, b=45, autoexpand=False),
         xaxis=dict(
             showgrid=True,
             gridcolor="rgba(255, 255, 255, 0.05)",
             zeroline=False,
             title=dict(text="Timeline (UTC)", font=dict(color="#64748B", size=12)),
             tickfont=dict(color="#64748B", size=11),
-            automargin=True,
         ),
         yaxis=dict(
             showgrid=True,
@@ -372,7 +371,6 @@ def render_chart(df: pd.DataFrame, attacker_ip: str) -> None:
             zeroline=False,
             title=dict(text="Requests / 2 min", font=dict(color="#64748B", size=12)),
             tickfont=dict(color="#64748B", size=11),
-            automargin=True,
         ),
         legend=dict(
             title=None,
